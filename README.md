@@ -1,25 +1,74 @@
 # Java-Shape-Calculator
-This program was created in order to meet final project standards. It currently serves to calculate the area and perimeter of flat shapes, but will soon expand to include a number of solids and trigonometric equations. As of yet, this program is only capable of dealing with rectangles, circles, triangles, and regular polygons.
+This program was created as a way of calculating certain values of a shape using others given by a user. Eventually it will expand to include solids and trigometry, but, as of yet, this program can only work with flat shapes. 
+By putting in a shape's side lengths (other inputs will be made possible later), it is possible to calculate the area and perimeter of basic 2D shapes.
 
 ## Project Goals
-asdfqre
+The goal of this project is to draw together and simplify geometric equations in a way that is easier to understand and thus more usable. Details of such equations will soon be provided in order to simplify equations and relate them to other shapes.
 
-### Planned Short-Term Additions
-- g
+### Current Planned Additions
+1. Getter and setter methods for all flat shapes.
+2. User interface with the ability to select shapes and calculate their values.
+3. Basic equations for flat shapes.
+4. Solid shape classes and their methods.
+5. Updated user interface to include new solid shapes.
 
 ### Project Completion
-- [ ] asdfwe
-- [ ] a
-- [ ] b
-- [ ] c
-- [ ] d
+- [x] 2D shape classes
+- [ ] Working user interface
+- [ ] Basic 3D shape classes
+- [ ] Polished user interface
+- [ ] Linking of shape classes for cohesion
+- [ ] Revision of shape classes
+- [ ] Basic trigonometry implemented through Triangle class
+- [ ] Interface update to support trigonometry
+- [ ] More advanced trigonometry
+- [ ] Complex shapes (i.e. ellipses, hedrons, and other advanced shapes)
+- [ ] Matching interface update
+- [ ] Custom shapes
+- [ ] Major interface update
 
 ## Examples
 
-User interface code
+The following code applies to the Rectangle class and is used to calculate area and perimeter given a rectangle's length and width. If the user wanted to create a rectangle with a length of three and a width of two, that rectangle's area would be six and it's perimeter twelve.
 
-Example Code
+```
+class Rectangle extends TwoDimensionalShape {
+  private double width;
+  private double length;
 
-Example Result
+  public Rectangle() {
+    
+  }
 
-Repeat the last two?
+  public Rectangle(double length, double width) {
+    this.length = length;
+    this.width = width;
+  }
+
+  public void setLength(double newLength) {
+    this.length = newLength;
+  }
+  
+  public double getLength() {
+    return length;
+  }
+  
+  public void setWidth(double newWidth) {
+    this.width = newWidth;
+  }
+  
+  public double getWidth() {
+    return width;
+  }
+
+  public double getPerimeter() {
+    return 2 * (length + width);
+  }
+  
+  public double getArea() {
+    return length * width;
+  }
+}
+```
+
+More examples coming soon.
