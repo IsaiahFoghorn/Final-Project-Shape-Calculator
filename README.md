@@ -6,15 +6,13 @@ By putting in a shape's side lengths (other inputs will be made possible later),
 The goal of this project is to draw together and simplify geometric equations in a way that is easier to understand and thus more usable. Details of such equations will soon be provided in order to simplify equations and relate them to other shapes.
 
 ### Current Planned Additions
-1. Getter and setter methods for all flat shapes.
-2. User interface with the ability to select shapes and calculate their values.
-3. Basic equations for flat shapes.
-4. Solid shape classes and their methods.
-5. Updated user interface to include new solid shapes.
+1. Basic equations for flat shapes.
+2. Solid shape classes and their methods.
+3. Updated user interface to include new solid shapes.
 
 ### Project Completion
 - [x] 2D shape classes
-- [ ] Working user interface
+- [x] Working user interface
 - [ ] Basic 3D shape classes
 - [ ] Polished user interface
 - [ ] Linking of shape classes for cohesion
