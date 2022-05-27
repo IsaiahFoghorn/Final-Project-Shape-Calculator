@@ -3,35 +3,128 @@ import java.lang.*;
 
 class Main {
   public static void main(String[] args) {
-    TwoDimensionalShape rec = new EquilateralPolygon(9, 2, 3);
-    System.out.println(((EquilateralPolygon)rec).getSideLength());
+    Scanner input = new Scanner(System.in); // String scanner
+    Scanner inp = new Scanner(System.in); // Number scanner
+
+    // An array list or multi-dimensional array could be used here to simplify this into a list of choices
+    String[] shapes = {"Rectangle", "Triangle", "Circle", "Polygon"};
+
+    int placeholder;
+    int shapeType;
+    GeometricObject o;
+
+    do {
+      System.out.print("Which shape would you like to use? \n1) Rectangle \n2) Triangle \n3) Circle \n4) Regular Polygon \n");
+
+      shapeType = (int)(getValue(""));
+      
+      switch (shapeType) {
+        case 1:
+          System.out.printf("\n%s\n", shapes[shapeType - 1]);
+          
+          o = new Rectangle();
+          ((Rectangle)o).setLength(getValue("  Length"));
+          ((Rectangle)o).setWidth(getValue("  Width"));
+          break;
+        case 2:
+          System.out.printf("\n%s\n", shapes[shapeType - 1]);
+          
+          o = new Triangle();
+          ((Triangle)o).setSideA(getValue("  Side A"));
+          ((Triangle)o).setSideB(getValue("  Side B"));
+          ((Triangle)o).setSideC(getValue("  Side C"));
+          break;
+        case 3:
+          System.out.printf("\n%s\n", shapes[shapeType - 1]);
+          
+          o = new Circle();
+          ((Circle)o).setRadius(getValue("  Radius"));
+          break;
+        case 4:
+          System.out.printf("\n%s\n", shapes[shapeType - 1]);
+          
+          o = new RegPolygon(getValue("  Number of Sides"));
+
+          System.out.print("\nWhich part of the polygon should be used to calculate? \n1) Apothem \n2) Radius \n3) Side Length \n");
+          placeholder = (int)(getValue(""));
+
+          switch (placeholder) {
+            case 1:
+              ((RegPolygon)o).setApothem(getValue("\nApothem"));
+              break;
+            case 2:
+              ((RegPolygon)o).setRadius(getValue("\nRadius"));
+              break;
+            case 3:
+              ((RegPolygon)o).setSideLength(getValue("\nSide Length"));
+              break;
+            default:
+              System.out.println("\nInvalid Input\n");
+              continue;
+          }
+        default:
+          System.out.println("\nInvalid Input\n");
+          continue;
+      }
+
+      System.out.println("" + o.toString() + "\n");
+    } while (true);
+  }
+  
+  public static double getValue(String valueType) {
+    Scanner inp = new Scanner(System.in);
+    double x;
     
+    do {
+      System.out.printf("%s: ", valueType);
+
+      try {
+        x = inp.nextDouble();
+      }
+      catch (InputMismatchException ex) {
+        System.out.println("\nInvalid Input\n");
+        inp.next();
+        continue;
+      }
+
+      if (x <= 0) {
+        System.out.println("\nInvalid Input\n");
+        continue;
+      } else {
+        break;
+      }
+    } while (true);
+
+    return x;
   }
 }
+
+// toString methods will need to be included. Consider .instanceof in order to allow GeometricObject the ability to differentiate between flat shapes and solids.
 
 class GeometricObject {
   public GeometricObject() {
-    
+
   }
+
+  // This will eventually have a purpose
 }
 
-// You can rename this class FlatShape
+abstract class FlatShape extends GeometricObject {
+  protected FlatShape() {
 
-abstract class TwoDimensionalShape extends GeometricObject {
-  protected TwoDimensionalShape() {
-    
   }
 
   public abstract double getPerimeter();
+
   public abstract double getArea();
 }
 
-class Rectangle extends TwoDimensionalShape {
+class Rectangle extends FlatShape {
   private double width;
   private double length;
 
   public Rectangle() {
-    
+
   }
 
   public Rectangle(double length, double width) {
@@ -42,15 +135,15 @@ class Rectangle extends TwoDimensionalShape {
   public void setLength(double newLength) {
     this.length = newLength;
   }
-  
+
   public double getLength() {
     return length;
   }
-  
+
   public void setWidth(double newWidth) {
     this.width = newWidth;
   }
-  
+
   public double getWidth() {
     return width;
   }
@@ -58,19 +151,25 @@ class Rectangle extends TwoDimensionalShape {
   public double getPerimeter() {
     return 2 * (length + width);
   }
-  
+
   public double getArea() {
     return length * width;
+  }
+
+  @Override
+
+  public String toString() {
+    return ("Rectangle: \n  Length = " + length + "\n  Width = " + width + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
   }
 }
 
 // Improving this class would require Calculus level geometry, so don't try it until later
 
-class Triangle {
+class Triangle extends FlatShape {
   private double sideA, sideB, sideC;
 
   public Triangle() {
-    
+
   }
 
   public Triangle(double sideA, double sideB, double sideC) {
@@ -78,29 +177,29 @@ class Triangle {
     this.sideB = sideB;
     this.sideC = sideC;
   }
-  
+
   public void setSideA(double newSideLength) {
-      this.sideA = newSideLength;
+    this.sideA = newSideLength;
   }
-  
+
   public double getSideA() {
-      return sideA;
+    return sideA;
   }
-  
+
   public void setSideB(double newSideLength) {
-      this.sideB = newSideLength;
+    this.sideB = newSideLength;
   }
-  
+
   public double getSideB() {
-      return sideB;
+    return sideB;
   }
-  
+
   public void setSideC(double newSideLength) {
-      this.sideC = newSideLength;
+    this.sideC = newSideLength;
   }
-  
+
   public double getSideC() {
-      return sideC;
+    return sideC;
   }
 
   public double getPerimeter() {
@@ -111,23 +210,29 @@ class Triangle {
     double s = (sideA + sideB + sideC) / 2;
     return (Math.sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
   }
+
+  @Override
+
+  public String toString() {
+    return ("Triangle: \n  Side A = " + sideA + "\n  Side B = " + sideB + "\n  Side C = " + sideC + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
+  }
 }
 
-class Circle {
+class Circle extends FlatShape {
   private double radius;
 
   public Circle() {
-    
+
   }
 
   public Circle(double radius) {
     this.radius = radius;
   }
-  
+
   public void setRadius(double newRadius) {
     this.radius = newRadius;
   }
-  
+
   public double getRadius() {
     return radius;
   }
@@ -139,29 +244,38 @@ class Circle {
   public double getArea() {
     return (Math.PI * Math.pow(radius, 2));
   }
+
+  @Override
+
+  public String toString() {
+    return ("Circle: \n  Radius = " + radius + "\n\n  Circumference = " + getPerimeter() + "\n  Area = " + getArea());
+  }
 }
 
-// Consider improving the constructors for the class below
-
-class EquilateralPolygon extends TwoDimensionalShape {
+class RegPolygon extends FlatShape {
   private double apothem;
   private double radius;
-  private double sideLength = 2;
-  private double numOfSides = 9;
-
+  private double sideLength = 1;
+  private double numOfSides = 5;
   private double angleX; // This angle is used to calculate apothem, radius, and side lengths
 
-  public EquilateralPolygon() {
-    
+  public RegPolygon() {
+
   }
 
-  public EquilateralPolygon(double numOfSides, double value, int selector) {
+  public RegPolygon(double numOfSides) {
+    this.numOfSides = numOfSides;
+  }
+
+  // This constructor definitely needs to be replaced later on
+  
+  public RegPolygon(double numOfSides, double value, int selector) {
     this.numOfSides = numOfSides;
     this.angleX = Math.toRadians((180 - (360 / numOfSides)) / 2);
 
     // Possible bugs below if program lacks valid values
-    
-    switch(selector) {
+
+    switch (selector) {
       case 1:
         this.apothem = value;
         calculateRadius();
@@ -177,6 +291,8 @@ class EquilateralPolygon extends TwoDimensionalShape {
     }
   }
 
+  // Consider a broader setValue() method
+  
   public void setApothem(double value) {
     this.apothem = value;
     calculateRadius();
@@ -184,8 +300,8 @@ class EquilateralPolygon extends TwoDimensionalShape {
   }
 
   // Consider making calculate functions private
-  
-  public void calculateApothem() {
+
+  private void calculateApothem() {
     this.apothem = Math.tan(angleX) * (sideLength / 2);
   }
 
@@ -198,8 +314,8 @@ class EquilateralPolygon extends TwoDimensionalShape {
     calculateSideLength();
     calculateApothem();
   }
-  
-  public void calculateRadius() {
+
+  private void calculateRadius() {
     this.radius = apothem / Math.sin(angleX);
   }
 
@@ -212,15 +328,15 @@ class EquilateralPolygon extends TwoDimensionalShape {
     calculateApothem();
     calculateRadius();
   }
-  
-  public void calculateSideLength() {
+
+  private void calculateSideLength() {
     this.sideLength = (Math.cos(angleX) * radius) * 2;
   }
 
   public double getSideLength() {
     return sideLength;
   }
-  
+
   public double getPerimeter() {
 
     return numOfSides * sideLength;
@@ -230,15 +346,18 @@ class EquilateralPolygon extends TwoDimensionalShape {
 
     return (apothem * getPerimeter()) / 2;
   }
+
+  public String toString() {
+    return ("Regular Polygon: \n  Apothem = " + apothem + "\n  Radius = " + radius + "\n  Side Length = " + sideLength + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
+  }
 }
 
-// This class could be renamed to SolidShape
+abstract class SolidShape extends GeometricObject {
+  protected SolidShape() {
 
-abstract class ThreeDimensionalShape extends GeometricObject {
-  protected ThreeDimensionalShape() {
-    
   }
 
   public abstract double getBaseArea();
+
   public abstract double getVolume();
 }
