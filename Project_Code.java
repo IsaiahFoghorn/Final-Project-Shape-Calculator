@@ -1,105 +1,9 @@
 import java.util.*;
 import java.lang.*;
 
-class Main {
-  public static void main(String[] args) {
-    Scanner input = new Scanner(System.in); // String scanner
-    Scanner inp = new Scanner(System.in); // Number scanner
-
-    // An array list or multi-dimensional array could be used here to simplify this into a list of choices
-    String[] shapes = {"Rectangle", "Triangle", "Circle", "Polygon"};
-
-    int placeholder;
-    int shapeType;
-    GeometricObject o;
-
-    do {
-      System.out.print("Which shape would you like to use? \n1) Rectangle \n2) Triangle \n3) Circle \n4) Regular Polygon \n");
-
-      shapeType = (int)(getValue(""));
-      
-      switch (shapeType) {
-        case 1:
-          System.out.printf("\n%s\n", shapes[shapeType - 1]);
-          
-          o = new Rectangle();
-          ((Rectangle)o).setLength(getValue("  Length"));
-          ((Rectangle)o).setWidth(getValue("  Width"));
-          break;
-        case 2:
-          System.out.printf("\n%s\n", shapes[shapeType - 1]);
-          
-          o = new Triangle();
-          ((Triangle)o).setSideA(getValue("  Side A"));
-          ((Triangle)o).setSideB(getValue("  Side B"));
-          ((Triangle)o).setSideC(getValue("  Side C"));
-          break;
-        case 3:
-          System.out.printf("\n%s\n", shapes[shapeType - 1]);
-          
-          o = new Circle();
-          ((Circle)o).setRadius(getValue("  Radius"));
-          break;
-        case 4:
-          System.out.printf("\n%s\n", shapes[shapeType - 1]);
-          
-          o = new RegPolygon(getValue("  Number of Sides"));
-
-          System.out.print("\nWhich part of the polygon should be used to calculate? \n1) Apothem \n2) Radius \n3) Side Length \n");
-          placeholder = (int)(getValue(""));
-
-          switch (placeholder) {
-            case 1:
-              ((RegPolygon)o).setApothem(getValue("\nApothem"));
-              break;
-            case 2:
-              ((RegPolygon)o).setRadius(getValue("\nRadius"));
-              break;
-            case 3:
-              ((RegPolygon)o).setSideLength(getValue("\nSide Length"));
-              break;
-            default:
-              System.out.println("\nInvalid Input\n");
-              continue;
-          }
-        default:
-          System.out.println("\nInvalid Input\n");
-          continue;
-      }
-
-      System.out.println("" + o.toString() + "\n");
-    } while (true);
-  }
-  
-  public static double getValue(String valueType) {
-    Scanner inp = new Scanner(System.in);
-    double x;
-    
-    do {
-      System.out.printf("%s: ", valueType);
-
-      try {
-        x = inp.nextDouble();
-      }
-      catch (InputMismatchException ex) {
-        System.out.println("\nInvalid Input\n");
-        inp.next();
-        continue;
-      }
-
-      if (x <= 0) {
-        System.out.println("\nInvalid Input\n");
-        continue;
-      } else {
-        break;
-      }
-    } while (true);
-
-    return x;
-  }
-}
-
-// toString methods will need to be included. Consider .instanceof in order to allow GeometricObject the ability to differentiate between flat shapes and solids.
+// toString methods will need to be included. Consider .instanceof in order to
+// allow GeometricObject the ability to differentiate between flat shapes and
+// solids.
 
 class GeometricObject {
   public GeometricObject() {
@@ -159,11 +63,13 @@ class Rectangle extends FlatShape {
   @Override
 
   public String toString() {
-    return ("Rectangle: \n  Length = " + length + "\n  Width = " + width + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
+    return ("Rectangle: \n  Length = " + length + "\n  Width = " + width + "\n\n  Perimeter = " + getPerimeter()
+        + "\n  Area = " + getArea());
   }
 }
 
-// Improving this class would require Calculus level geometry, so don't try it until later
+// Improving this class would require Calculus level geometry, so don't try it
+// until later
 
 class Triangle extends FlatShape {
   private double sideA, sideB, sideC;
@@ -214,7 +120,8 @@ class Triangle extends FlatShape {
   @Override
 
   public String toString() {
-    return ("Triangle: \n  Side A = " + sideA + "\n  Side B = " + sideB + "\n  Side C = " + sideC + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
+    return ("Triangle: \n  Side A = " + sideA + "\n  Side B = " + sideB + "\n  Side C = " + sideC + "\n\n  Perimeter = "
+        + getPerimeter() + "\n  Area = " + getArea());
   }
 }
 
@@ -268,7 +175,7 @@ class RegPolygon extends FlatShape {
   }
 
   // This constructor definitely needs to be replaced later on
-  
+
   public RegPolygon(double numOfSides, double value, int selector) {
     this.numOfSides = numOfSides;
     this.angleX = Math.toRadians((180 - (360 / numOfSides)) / 2);
@@ -292,7 +199,7 @@ class RegPolygon extends FlatShape {
   }
 
   // Consider a broader setValue() method
-  
+
   public void setApothem(double value) {
     this.apothem = value;
     calculateRadius();
@@ -348,7 +255,8 @@ class RegPolygon extends FlatShape {
   }
 
   public String toString() {
-    return ("Regular Polygon: \n  Apothem = " + apothem + "\n  Radius = " + radius + "\n  Side Length = " + sideLength + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
+    return ("Regular Polygon: \n  Apothem = " + apothem + "\n  Radius = " + radius + "\n  Side Length = " + sideLength
+        + "\n\n  Perimeter = " + getPerimeter() + "\n  Area = " + getArea());
   }
 }
 
